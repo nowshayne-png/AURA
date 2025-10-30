@@ -18,39 +18,39 @@ export default function MemoryLogs({ messages }: MemoryLogsProps) {
   if (messages.length === 0) {
     return (
       <div className="h-full flex flex-col items-center justify-center text-center p-8">
-        <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-          <MessageSquare className="w-12 h-12 text-gray-400" />
+        <div className="w-24 h-24 bg-slate-100 rounded-3xl flex items-center justify-center mb-6">
+          <MessageSquare className="w-12 h-12 text-slate-400" />
         </div>
-        <h3 className="text-xl font-semibold text-gray-800 mb-2">No Chat History</h3>
-        <p className="text-gray-600 max-w-md">
-          Start a conversation with AURA to see your chat history here.
+        <h3 className="text-xl font-semibold text-slate-900 mb-2">No Chat History</h3>
+        <p className="text-slate-600 max-w-md">
+          Start a conversation with A.U.R.A to see your chat history here.
         </p>
       </div>
     );
   }
 
   return (
-    <div className="h-full overflow-y-auto p-6">
+    <div className="h-full overflow-y-auto p-4 md:p-6">
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">Memory Logs</h2>
-        <p className="text-gray-600">Complete conversation history with AURA</p>
+        <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Memory Logs</h2>
+        <p className="text-slate-600">Complete conversation history with A.U.R.A</p>
       </div>
 
       <div className="max-w-4xl mx-auto space-y-4">
         {messages.map((message) => (
           <div
             key={message.id}
-            className={`flex items-start space-x-4 p-4 rounded-xl ${
+            className={`flex items-start space-x-3 md:space-x-4 p-4 md:p-5 rounded-2xl ${
               message.type === 'user'
-                ? 'bg-green-50 border border-green-200'
-                : 'bg-white border border-gray-200'
+                ? 'bg-slate-900 text-white shadow-lg'
+                : 'bg-white border border-slate-200 shadow-sm'
             }`}
           >
             <div
-              className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
+              className={`w-9 h-9 md:w-10 md:h-10 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg ${
                 message.type === 'user'
-                  ? 'bg-gradient-to-br from-green-400 to-emerald-600'
-                  : 'bg-gradient-to-br from-gray-400 to-gray-600'
+                  ? 'bg-white/20'
+                  : 'bg-gradient-to-br from-green-500 to-emerald-600'
               }`}
             >
               {message.type === 'user' ? (
@@ -62,15 +62,19 @@ export default function MemoryLogs({ messages }: MemoryLogsProps) {
 
             <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between mb-2">
-                <span className="font-semibold text-gray-900">
-                  {message.type === 'user' ? 'You' : 'AURA'}
+                <span className={`font-semibold ${
+                  message.type === 'user' ? 'text-white' : 'text-slate-900'
+                }`}>
+                  {message.type === 'user' ? 'You' : 'A.U.R.A'}
                 </span>
-                <span className="text-xs text-gray-500">
+                <span className={`text-xs ${
+                  message.type === 'user' ? 'text-white/70' : 'text-slate-500'
+                }`}>
                   {message.timestamp.toLocaleString()}
                 </span>
               </div>
 
-              <div className="text-gray-800">
+              <div className={message.type === 'user' ? 'text-white' : 'text-slate-800'}>
                 {message.type === 'assistant' ? (
                   <Markdown content={message.content} />
                 ) : (
@@ -83,7 +87,7 @@ export default function MemoryLogs({ messages }: MemoryLogsProps) {
                   <img
                     src={message.imageUrl}
                     alt={message.imagePrompt || 'Generated image'}
-                    className="rounded-lg max-w-sm border border-gray-200"
+                    className="rounded-xl max-w-full md:max-w-sm border border-slate-200 shadow-sm"
                   />
                 </div>
               )}

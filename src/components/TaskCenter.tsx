@@ -100,7 +100,7 @@ export default function TaskCenter() {
   if (loading) {
     return (
       <div className="h-full flex items-center justify-center">
-        <Loader className="w-8 h-8 text-green-600 animate-spin" />
+        <Loader className="w-8 h-8 text-slate-900 animate-spin" />
       </div>
     );
   }
@@ -108,11 +108,11 @@ export default function TaskCenter() {
   if (tasks.length === 0) {
     return (
       <div className="h-full flex flex-col items-center justify-center text-center p-8">
-        <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-          <Package className="w-12 h-12 text-gray-400" />
+        <div className="w-24 h-24 bg-slate-100 rounded-3xl flex items-center justify-center mb-6">
+          <Package className="w-12 h-12 text-slate-400" />
         </div>
-        <h3 className="text-xl font-semibold text-gray-800 mb-2">No Tasks Yet</h3>
-        <p className="text-gray-600 max-w-md">
+        <h3 className="text-xl font-semibold text-slate-900 mb-2">No Tasks Yet</h3>
+        <p className="text-slate-600 max-w-md">
           Your task history will appear here. Try ordering food, booking a ride, or making any other request!
         </p>
       </div>
@@ -120,10 +120,10 @@ export default function TaskCenter() {
   }
 
   return (
-    <div className="h-full overflow-y-auto p-6 space-y-4">
+    <div className="h-full overflow-y-auto p-4 md:p-6 space-y-4">
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">Task Center</h2>
-        <p className="text-gray-600">Track all your actions and orders in real-time</p>
+        <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Task Center</h2>
+        <p className="text-slate-600">Track all your actions and orders in real-time</p>
       </div>
 
       <div className="space-y-4">
@@ -135,25 +135,25 @@ export default function TaskCenter() {
           return (
             <div
               key={task.id}
-              className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-200 animate-slide-in"
+              className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-200 overflow-hidden border border-slate-200 animate-slideIn"
             >
-              <div className="p-6">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-start space-x-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-emerald-600 rounded-xl flex items-center justify-center flex-shrink-0">
+              <div className="p-4 md:p-6">
+                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
+                  <div className="flex items-start space-x-3 md:space-x-4 flex-1">
+                    <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg">
                       <TaskIcon className="w-6 h-6 text-white" />
                     </div>
-                    <div>
-                      <div className="flex items-center space-x-2 mb-1">
-                        <h3 className="text-lg font-semibold text-gray-800">{task.title}</h3>
-                        <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-wrap items-center gap-2 mb-1">
+                        <h3 className="text-base md:text-lg font-semibold text-slate-900 truncate">{task.title}</h3>
+                        <span className="text-xs text-slate-600 bg-slate-100 px-2 py-1 rounded-full whitespace-nowrap">
                           {getTaskTypeLabel(task.task_type)}
                         </span>
                       </div>
                       {task.description && (
-                        <p className="text-gray-600 text-sm">{task.description}</p>
+                        <p className="text-slate-600 text-sm">{task.description}</p>
                       )}
-                      <p className="text-xs text-gray-500 mt-1">
+                      <p className="text-xs text-slate-500 mt-1">
                         {new Date(task.created_at).toLocaleString()}
                       </p>
                     </div>
@@ -166,25 +166,25 @@ export default function TaskCenter() {
                 </div>
 
                 {task.api_response && (
-                  <div className="bg-gray-50 rounded-lg p-4 mt-4 border border-gray-200">
-                    <h4 className="text-sm font-semibold text-gray-700 mb-2">Order Details</h4>
+                  <div className="bg-slate-50 rounded-xl p-4 mt-4 border border-slate-200">
+                    <h4 className="text-sm font-semibold text-slate-900 mb-3">Order Details</h4>
                     <div className="space-y-2 text-sm">
                       {task.task_type === 'restaurant' && task.api_response.orderId && (
                         <>
                           <div className="flex justify-between">
-                            <span className="text-gray-600">Order ID:</span>
-                            <span className="font-medium text-gray-900">{task.api_response.orderId}</span>
+                            <span className="text-slate-600">Order ID:</span>
+                            <span className="font-medium text-slate-900">{task.api_response.orderId}</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-gray-600">Restaurant:</span>
-                            <span className="font-medium text-gray-900">{task.api_response.restaurant}</span>
+                            <span className="text-slate-600">Restaurant:</span>
+                            <span className="font-medium text-slate-900">{task.api_response.restaurant}</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-gray-600">Delivery Time:</span>
-                            <span className="font-medium text-gray-900">{task.api_response.estimatedDelivery}</span>
+                            <span className="text-slate-600">Delivery Time:</span>
+                            <span className="font-medium text-slate-900">{task.api_response.estimatedDelivery}</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-gray-600">Total:</span>
+                            <span className="text-slate-600">Total:</span>
                             <span className="font-semibold text-green-600">${task.api_response.totalAmount}</span>
                           </div>
                         </>
@@ -192,19 +192,19 @@ export default function TaskCenter() {
                       {task.task_type === 'hotel' && task.api_response.bookingId && (
                         <>
                           <div className="flex justify-between">
-                            <span className="text-gray-600">Booking ID:</span>
-                            <span className="font-medium text-gray-900">{task.api_response.bookingId}</span>
+                            <span className="text-slate-600">Booking ID:</span>
+                            <span className="font-medium text-slate-900">{task.api_response.bookingId}</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-gray-600">Hotel:</span>
-                            <span className="font-medium text-gray-900">{task.api_response.hotelName}</span>
+                            <span className="text-slate-600">Hotel:</span>
+                            <span className="font-medium text-slate-900">{task.api_response.hotelName}</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-gray-600">Check-in:</span>
-                            <span className="font-medium text-gray-900">{task.api_response.checkIn}</span>
+                            <span className="text-slate-600">Check-in:</span>
+                            <span className="font-medium text-slate-900">{task.api_response.checkIn}</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-gray-600">Total:</span>
+                            <span className="text-slate-600">Total:</span>
                             <span className="font-semibold text-green-600">${task.api_response.totalAmount}</span>
                           </div>
                         </>
@@ -212,19 +212,19 @@ export default function TaskCenter() {
                       {task.task_type === 'flight' && task.api_response.bookingId && (
                         <>
                           <div className="flex justify-between">
-                            <span className="text-gray-600">Booking ID:</span>
-                            <span className="font-medium text-gray-900">{task.api_response.bookingId}</span>
+                            <span className="text-slate-600">Booking ID:</span>
+                            <span className="font-medium text-slate-900">{task.api_response.bookingId}</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-gray-600">Flight:</span>
-                            <span className="font-medium text-gray-900">{task.api_response.flightNumber}</span>
+                            <span className="text-slate-600">Flight:</span>
+                            <span className="font-medium text-slate-900">{task.api_response.flightNumber}</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-gray-600">Route:</span>
-                            <span className="font-medium text-gray-900">{task.api_response.from} → {task.api_response.to}</span>
+                            <span className="text-slate-600">Route:</span>
+                            <span className="font-medium text-slate-900">{task.api_response.from} → {task.api_response.to}</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-gray-600">Total:</span>
+                            <span className="text-slate-600">Total:</span>
                             <span className="font-semibold text-green-600">${task.api_response.totalAmount}</span>
                           </div>
                         </>
@@ -232,19 +232,19 @@ export default function TaskCenter() {
                       {task.task_type === 'ride' && task.api_response.rideId && (
                         <>
                           <div className="flex justify-between">
-                            <span className="text-gray-600">Ride ID:</span>
-                            <span className="font-medium text-gray-900">{task.api_response.rideId}</span>
+                            <span className="text-slate-600">Ride ID:</span>
+                            <span className="font-medium text-slate-900">{task.api_response.rideId}</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-gray-600">Driver:</span>
-                            <span className="font-medium text-gray-900">{task.api_response.driverName}</span>
+                            <span className="text-slate-600">Driver:</span>
+                            <span className="font-medium text-slate-900">{task.api_response.driverName}</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-gray-600">Vehicle:</span>
-                            <span className="font-medium text-gray-900">{task.api_response.vehicleType}</span>
+                            <span className="text-slate-600">Vehicle:</span>
+                            <span className="font-medium text-slate-900">{task.api_response.vehicleType}</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-gray-600">Fare:</span>
+                            <span className="text-slate-600">Fare:</span>
                             <span className="font-semibold text-green-600">${task.api_response.fare}</span>
                           </div>
                         </>

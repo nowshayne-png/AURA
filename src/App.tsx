@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MessageSquare, Mic, MicOff, Waves, Leaf, Settings, History, FileText, Zap, CheckCircle2, Clock, Play, Upload, Paperclip, LogIn, LogOut, User } from 'lucide-react';
+import { MessageSquare, Mic, MicOff, Waves, Leaf, Settings, History, FileText, Zap, CheckCircle2, Clock, Play, Upload, Paperclip, LogIn, LogOut, User, Menu, X } from 'lucide-react';
 import { GeminiService } from './services/gemini';
 import { FileUpload } from './components/FileUpload';
 import { ImageDisplay } from './components/ImageDisplay';
@@ -539,143 +539,222 @@ function App() {
     }
   };
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-sage-50 via-white to-beige-50 relative overflow-hidden">
-      {/* Floating Particles Background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {particles.map(particle => (
-          <div
-            key={particle.id}
-            className="absolute rounded-full bg-sage-200/20 animate-float"
-            style={{
-              left: `${particle.x}%`,
-              top: `${particle.y}%`,
-              width: `${particle.size}px`,
-              height: `${particle.size}px`,
-              animationDelay: `${particle.id * 0.5}s`,
-              animationDuration: `${particle.speed + 3}s`
-            }}
-          />
-        ))}
+  // Show landing page if not authenticated
+  if (!isLoaded) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
+        <div className="w-12 h-12 border-4 border-white/20 border-t-white rounded-full animate-spin" />
       </div>
+    );
+  }
 
-      {/* Sidebar */}
-      <div className={`fixed left-0 top-0 h-full w-80 bg-white/40 backdrop-blur-md border-r border-sage-200/50 transform transition-transform duration-500 ease-out z-40 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-        <div className="p-6 border-b border-sage-200/30">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-sage-400 to-sage-600 rounded-full flex items-center justify-center">
-              <Leaf className="w-5 h-5 text-white" />
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 relative overflow-hidden">
+        {/* Subtle gradient orbs */}
+        <div className="absolute top-20 left-20 w-96 h-96 bg-green-400/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-20 w-96 h-96 bg-emerald-400/10 rounded-full blur-3xl" />
+
+        {/* Header */}
+        <header className="relative z-10 px-6 py-4 md:px-8 md:py-6">
+          <div className="max-w-7xl mx-auto flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg">
+                <Leaf className="w-5 h-5 text-white" />
+              </div>
+              <span className="text-xl font-semibold text-slate-900">A.U.R.A</span>
             </div>
-            <div>
-              <h2 className="font-semibold text-sage-800">AURA</h2>
-              <p className="text-sm text-sage-600">Universal Reasoning Agent</p>
+            <SignInButton mode="modal">
+              <button className="px-5 py-2.5 bg-slate-900 text-white rounded-full hover:bg-slate-800 transition-all duration-300 text-sm font-medium shadow-sm hover:shadow-md">
+                Sign In
+              </button>
+            </SignInButton>
+          </div>
+        </header>
+
+        {/* Hero Section */}
+        <div className="relative z-10 px-6 py-20 md:py-32">
+          <div className="max-w-5xl mx-auto text-center">
+            {/* Icon */}
+            <div className="inline-flex items-center justify-center w-20 h-20 md:w-24 md:h-24 bg-gradient-to-br from-green-500 to-emerald-600 rounded-3xl shadow-2xl mb-8 animate-bloom">
+              <Leaf className="w-10 h-10 md:w-12 md:h-12 text-white" />
+            </div>
+
+            {/* Headline */}
+            <h1 className="text-5xl md:text-7xl font-bold text-slate-900 mb-6 tracking-tight leading-tight">
+              Meet A.U.R.A
+            </h1>
+            <p className="text-xl md:text-2xl text-slate-600 mb-4 max-w-3xl mx-auto font-medium">
+              Your Universal Reasoning Agent
+            </p>
+            <p className="text-lg md:text-xl text-slate-500 mb-12 max-w-2xl mx-auto leading-relaxed">
+              Think smarter. Work faster. Achieve more. Your intelligent assistant for complex reasoning, task management, and seamless productivity.
+            </p>
+
+            {/* CTA */}
+            <SignInButton mode="modal">
+              <button className="group inline-flex items-center space-x-3 px-8 py-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-full hover:from-green-600 hover:to-emerald-700 transition-all duration-300 text-lg font-semibold shadow-xl hover:shadow-2xl hover:scale-105">
+                <span>Get Started</span>
+                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </SignInButton>
+          </div>
+        </div>
+
+        {/* Features */}
+        <div className="relative z-10 px-6 py-20 bg-white/50 backdrop-blur-sm">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold text-center text-slate-900 mb-16">Powerful Features</h2>
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="group bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div className="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <MessageSquare className="w-7 h-7 text-green-600" />
+                </div>
+                <h3 className="text-xl font-semibold text-slate-900 mb-3">Intelligent Conversations</h3>
+                <p className="text-slate-600 leading-relaxed">Engage in natural, context-aware conversations that help you think through complex problems.</p>
+              </div>
+
+              <div className="group bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div className="w-14 h-14 bg-emerald-100 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <Zap className="w-7 h-7 text-emerald-600" />
+                </div>
+                <h3 className="text-xl font-semibold text-slate-900 mb-3">Smart Task Management</h3>
+                <p className="text-slate-600 leading-relaxed">Automatically generate and track tasks from your conversations with AI-powered insights.</p>
+              </div>
+
+              <div className="group bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div className="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <FileText className="w-7 h-7 text-green-600" />
+                </div>
+                <h3 className="text-xl font-semibold text-slate-900 mb-3">Document Intelligence</h3>
+                <p className="text-slate-600 leading-relaxed">Upload and analyze documents with powerful AI that understands context and extracts insights.</p>
+              </div>
             </div>
           </div>
         </div>
 
-        <nav className="p-4 space-y-2">
-          <button 
+        {/* Footer */}
+        <footer className="relative z-10 px-6 py-12 text-center">
+          <p className="text-slate-500 text-sm">Experience the future of intelligent assistance</p>
+        </footer>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 relative overflow-hidden">
+      {/* Subtle gradient orbs */}
+      <div className="absolute top-20 left-20 w-96 h-96 bg-green-400/5 rounded-full blur-3xl" />
+      <div className="absolute bottom-20 right-20 w-96 h-96 bg-emerald-400/5 rounded-full blur-3xl" />
+
+      {/* Sidebar */}
+      <div className={`fixed left-0 top-0 h-full w-80 bg-white/80 backdrop-blur-xl border-r border-slate-200/50 transform transition-transform duration-300 ease-out z-40 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        <div className="p-6 border-b border-slate-200/50">
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg">
+              <Leaf className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <h2 className="font-semibold text-slate-900">A.U.R.A</h2>
+              <p className="text-sm text-slate-600">Universal Reasoning Agent</p>
+            </div>
+          </div>
+        </div>
+
+        <nav className="p-4 space-y-1.5">
+          <button
             onClick={() => setCurrentView('chat')}
-            className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-300 ${currentView === 'chat' ? 'bg-sage-100 text-sage-800' : 'text-sage-600 hover:bg-sage-50'}`}
+            className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 ${currentView === 'chat' ? 'bg-slate-900 text-white shadow-lg' : 'text-slate-600 hover:bg-slate-100'}`}
           >
             <MessageSquare className="w-5 h-5" />
-            <span>Conversations</span>
+            <span className="font-medium">Conversations</span>
           </button>
-          
+
           <button
             onClick={() => setCurrentView('tasks')}
-            className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-300 ${currentView === 'tasks' ? 'bg-sage-100 text-sage-800' : 'text-sage-600 hover:bg-sage-50'}`}
+            className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 ${currentView === 'tasks' ? 'bg-slate-900 text-white shadow-lg' : 'text-slate-600 hover:bg-slate-100'}`}
           >
             <Zap className="w-5 h-5" />
-            <span>Task Center</span>
+            <span className="font-medium">Task Center</span>
           </button>
 
           <button
             onClick={() => setShowFileUpload(!showFileUpload)}
-            className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-300 ${showFileUpload ? 'bg-sage-100 text-sage-800' : 'text-sage-600 hover:bg-sage-50'}`}
+            className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 ${showFileUpload ? 'bg-slate-900 text-white shadow-lg' : 'text-slate-600 hover:bg-slate-100'}`}
           >
             <Upload className="w-5 h-5" />
-            <span>Upload Files</span>
+            <span className="font-medium">Upload Files</span>
           </button>
 
           <button
             onClick={() => setCurrentView('memory')}
-            className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-300 ${currentView === 'memory' ? 'bg-sage-100 text-sage-800' : 'text-sage-600 hover:bg-sage-50'}`}
+            className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 ${currentView === 'memory' ? 'bg-slate-900 text-white shadow-lg' : 'text-slate-600 hover:bg-slate-100'}`}
           >
             <History className="w-5 h-5" />
-            <span>Memory Logs</span>
+            <span className="font-medium">Memory Logs</span>
           </button>
 
           <button
             onClick={() => setCurrentView('files')}
-            className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-300 ${currentView === 'files' ? 'bg-sage-100 text-sage-800' : 'text-sage-600 hover:bg-sage-50'}`}
+            className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 ${currentView === 'files' ? 'bg-slate-900 text-white shadow-lg' : 'text-slate-600 hover:bg-slate-100'}`}
           >
             <FileText className="w-5 h-5" />
-            <span>Files</span>
+            <span className="font-medium">Files</span>
           </button>
-          
-          <button className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sage-600 hover:bg-sage-50 transition-all duration-300">
+
+          <button className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-100 transition-all duration-200">
             <Settings className="w-5 h-5" />
-            <span>Settings</span>
+            <span className="font-medium">Settings</span>
           </button>
         </nav>
       </div>
 
       {/* Main Content */}
-      <div className={`transition-all duration-500 ease-out ${sidebarOpen ? 'ml-80' : 'ml-0'}`}>
+      <div className={`transition-all duration-300 ease-out ${sidebarOpen ? 'ml-80' : 'ml-0'}`}>
         {/* Header */}
-        <header className="bg-white/30 backdrop-blur-md border-b border-sage-200/30 px-6 py-4">
+        <header className="bg-white/80 backdrop-blur-xl border-b border-slate-200/50 px-4 md:px-6 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <button 
+            <div className="flex items-center space-x-3 md:space-x-4">
+              <button
                 onClick={() => setSidebarOpen(!sidebarOpen)}
-                className="p-2 rounded-lg bg-sage-100/50 hover:bg-sage-200/50 transition-colors duration-200"
+                className="p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 transition-colors duration-200"
               >
-                <div className="w-5 h-5 flex flex-col justify-between">
-                  <div className="w-full h-0.5 bg-sage-600 rounded"></div>
-                  <div className="w-full h-0.5 bg-sage-600 rounded"></div>
-                  <div className="w-full h-0.5 bg-sage-600 rounded"></div>
-                </div>
+                {sidebarOpen ? <X className="w-5 h-5 text-slate-700" /> : <Menu className="w-5 h-5 text-slate-700" />}
               </button>
-              
+
               <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-gradient-to-br from-sage-400 to-sage-600 rounded-full flex items-center justify-center animate-pulse">
-                  <Leaf className="w-4 h-4 text-white" />
+                <div className="w-9 h-9 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center shadow-lg">
+                  <Leaf className="w-5 h-5 text-white" />
                 </div>
-                <div>
-                  <h1 className="font-bold text-xl text-sage-800">A.U.R.A</h1>
-                  <p className="text-sm text-sage-600">Ready to assist</p>
+                <div className="hidden md:block">
+                  <h1 className="font-bold text-lg text-slate-900">A.U.R.A</h1>
+                  <p className="text-xs text-slate-600">Ready to assist</p>
                 </div>
               </div>
             </div>
 
-            <div className="flex items-center space-x-3">
-              {isLoaded && user ? (
-                <div className="flex items-center space-x-3">
-                  <div className="flex items-center space-x-2 px-4 py-2 bg-sage-100/50 rounded-full">
-                    <User className="w-4 h-4 text-sage-700" />
-                    <span className="text-sm text-sage-700">{currentUser?.full_name || currentUser?.email}</span>
+            <div className="flex items-center space-x-2 md:space-x-3">
+              {isLoaded && user && (
+                <>
+                  <div className="hidden sm:flex items-center space-x-2 px-3 py-1.5 md:px-4 md:py-2 bg-slate-100 rounded-full">
+                    <User className="w-4 h-4 text-slate-700" />
+                    <span className="text-sm text-slate-700 max-w-[100px] md:max-w-none truncate">{currentUser?.full_name || currentUser?.email}</span>
                   </div>
                   <div className="clerk-user-button-wrapper">
                     <UserButton
                       appearance={{
                         elements: {
-                          avatarBox: 'w-10 h-10',
-                          userButtonPopoverCard: 'bg-white shadow-2xl border border-sage-200',
-                          userButtonPopoverActionButton: 'hover:bg-sage-50',
+                          avatarBox: 'w-9 h-9 md:w-10 md:h-10',
+                          userButtonPopoverCard: 'bg-white shadow-2xl border border-slate-200',
+                          userButtonPopoverActionButton: 'hover:bg-slate-50',
                         }
                       }}
                     />
                   </div>
-                </div>
-              ) : isLoaded ? (
-                <SignInButton mode="modal">
-                  <button className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg hover:from-green-600 hover:to-emerald-700 transition-all shadow-lg hover:shadow-xl">
-                    <LogIn className="w-4 h-4" />
-                    <span className="text-sm font-medium">Sign In</span>
-                  </button>
-                </SignInButton>
-              ) : null}
+                </>
+              )}
             </div>
           </div>
         </header>
@@ -685,7 +764,7 @@ function App() {
           <div className="flex flex-col h-[calc(100vh-5rem)]">
             {/* File Upload Panel */}
             {showFileUpload && (
-              <div className="p-6 bg-white/20 backdrop-blur-sm border-b border-sage-200/30 animate-slideIn">
+              <div className="p-4 md:p-6 bg-white/50 backdrop-blur-sm border-b border-slate-200/50 animate-slideIn">
                 <FileUpload
                   onFileUploaded={handleFileUploaded}
                   uploadedFiles={geminiService.getUploadedFiles()}
@@ -695,13 +774,13 @@ function App() {
             )}
             
             {/* Messages */}
-            <div className={`flex-1 overflow-y-auto p-6 space-y-6 ${showFileUpload ? 'h-[calc(100vh-20rem)]' : ''}`}>
+            <div className={`flex-1 overflow-y-auto p-4 md:p-6 space-y-4 md:space-y-6 ${showFileUpload ? 'h-[calc(100vh-20rem)]' : ''}`}>
               {messages.map((message) => (
                 <div key={message.id} className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'} animate-slideIn`}>
-                  <div className={`max-w-2xl ${message.type === 'user' 
-                    ? 'bg-sage-500 text-white rounded-3xl rounded-br-lg' 
-                    : 'bg-white/60 backdrop-blur-sm text-sage-800 rounded-3xl rounded-bl-lg border border-sage-200/30'
-                  } px-6 py-4 shadow-sm hover:shadow-md transition-all duration-300`}>
+                  <div className={`max-w-full md:max-w-2xl ${message.type === 'user'
+                    ? 'bg-slate-900 text-white rounded-3xl rounded-br-lg shadow-lg'
+                    : 'bg-white/90 backdrop-blur-sm text-slate-800 rounded-3xl rounded-bl-lg border border-slate-200/50 shadow-sm'
+                  } px-4 py-3 md:px-6 md:py-4 transition-all duration-200`}>
                     {message.type === 'assistant' ? (
                       <Markdown content={message.content} />
                     ) : (
@@ -723,7 +802,7 @@ function App() {
                         />
                       </div>
                     )}
-                    <p className={`text-xs mt-2 ${message.type === 'user' ? 'text-sage-100' : 'text-sage-500'}`}>
+                    <p className={`text-xs mt-2 ${message.type === 'user' ? 'text-white/70' : 'text-slate-500'}`}>
                       {message.timestamp.toLocaleTimeString()}
                     </p>
                   </div>
@@ -732,15 +811,15 @@ function App() {
               
               {(isTyping || isGeneratingImage) && (
                 <div className="flex justify-start animate-slideIn">
-                  <div className="bg-white/60 backdrop-blur-sm rounded-3xl rounded-bl-lg px-6 py-4 border border-sage-200/30">
+                  <div className="bg-white/90 backdrop-blur-sm rounded-3xl rounded-bl-lg px-4 py-3 md:px-6 md:py-4 border border-slate-200/50 shadow-sm">
                     <div className="flex items-center space-x-3">
                       <div className="flex space-x-2">
-                        <div className="w-2 h-2 bg-sage-400 rounded-full animate-bounce"></div>
-                        <div className="w-2 h-2 bg-sage-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                        <div className="w-2 h-2 bg-sage-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                        <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce"></div>
+                        <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                        <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
                       </div>
                       {isGeneratingImage && (
-                        <span className="text-sm text-sage-600">Generating image...</span>
+                        <span className="text-sm text-slate-600">Generating image...</span>
                       )}
                     </div>
                   </div>
@@ -749,7 +828,7 @@ function App() {
             </div>
 
             {/* Input Area */}
-            <div className="p-6 bg-white/20 backdrop-blur-sm border-t border-sage-200/30">
+            <div className="p-4 md:p-6 bg-white/80 backdrop-blur-xl border-t border-slate-200/50">
               {/* Upload Error */}
               {uploadError && (
                 <div className="mb-4 flex items-center space-x-2 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700">
@@ -763,19 +842,19 @@ function App() {
                 </div>
               )}
               
-              <div className="flex items-end space-x-4">
+              <div className="flex items-end space-x-2 md:space-x-3">
                 <div className="flex-1 relative">
                   <input
                     type="text"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && !e.shiftKey && handleSendMessage()}
-                    placeholder="Chat with A.U.R.A, book food/movies via FasterBook, upload documents, or generate images..."
-                    className="w-full px-6 py-4 bg-white/60 backdrop-blur-sm border border-sage-200/50 rounded-2xl focus:outline-none focus:ring-2 focus:ring-sage-300 focus:border-transparent transition-all duration-300 text-sage-800 placeholder-sage-500"
+                    placeholder="Message A.U.R.A..."
+                    className="w-full px-4 py-3 md:px-6 md:py-4 bg-white border border-slate-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-slate-400 focus:border-transparent transition-all duration-200 text-slate-900 placeholder-slate-500 text-sm md:text-base"
                   />
                   
                   {geminiService.getUploadedFiles().length > 0 && (
-                    <div className="absolute -top-8 left-2 text-xs text-sage-600 bg-sage-100/80 px-2 py-1 rounded-md">
+                    <div className="absolute -top-8 left-2 text-xs text-slate-700 bg-slate-100 px-2 py-1 rounded-lg shadow-sm">
                       📎 {geminiService.getUploadedFiles().length} file(s) attached
                     </div>
                   )}
@@ -792,27 +871,27 @@ function App() {
                 <button
                   onClick={() => document.getElementById('quick-file-upload')?.click()}
                   disabled={isUploadingFile}
-                  className="p-4 rounded-xl bg-sage-100 text-sage-600 hover:bg-sage-200 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
+                  className="p-3 md:p-3.5 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
                   title="Upload file"
                 >
-                  {isUploadingFile ? <div className="w-5 h-5 border-2 border-sage-400 border-t-transparent rounded-full animate-spin" /> : <Paperclip className="w-5 h-5" />}
+                  {isUploadingFile ? <div className="w-5 h-5 border-2 border-slate-400 border-t-transparent rounded-full animate-spin" /> : <Paperclip className="w-5 h-5" />}
                 </button>
-                
+
                 <button
                   onClick={toggleVoice}
-                  className={`p-4 rounded-xl transition-all duration-300 ${isListening 
-                    ? 'bg-red-100 text-red-600 hover:bg-red-200' 
-                    : 'bg-sage-100 text-sage-600 hover:bg-sage-200'
+                  className={`p-3 md:p-3.5 rounded-xl transition-all duration-200 ${isListening
+                    ? 'bg-red-100 text-red-600 hover:bg-red-200'
+                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                   }`}
                 >
                   {isListening ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
                   {isListening && <Waves className="w-4 h-4 absolute animate-ping" />}
                 </button>
-                
+
                 <button
                   onClick={handleSendMessage}
                   disabled={!input.trim() || isTyping || isGeneratingImage}
-                  className="px-6 py-4 bg-gradient-to-r from-sage-500 to-sage-600 text-white rounded-xl hover:from-sage-600 hover:to-sage-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-sm hover:shadow-md"
+                  className="px-4 py-3 md:px-6 md:py-3.5 bg-slate-900 text-white rounded-xl hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-sm hover:shadow-md font-medium text-sm md:text-base"
                 >
                   Send
                 </button>
@@ -889,7 +968,7 @@ function App() {
       {/* Overlay for mobile */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/20 backdrop-blur-sm z-30 lg:hidden"
+          className="fixed inset-0 bg-black/30 backdrop-blur-sm z-30 lg:hidden animate-fadeIn"
           onClick={() => setSidebarOpen(false)}
         />
       )}
